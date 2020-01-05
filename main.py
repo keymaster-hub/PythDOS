@@ -16,6 +16,6 @@ while True:
 
     cli = input(os.getcwd() + '>').lower()
     if cli in functions:
+        print('\n')
         functions[cli]()
-
-    
+        print('\n')

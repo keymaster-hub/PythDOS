@@ -22,8 +22,8 @@ def dir():
             files_counter += 1
         filetime = os.path.getmtime(item)
         x = datetime.datetime.fromtimestamp(filetime)
-        print(x.strftime('%m.%d.%Y  %H:%M'), dir_or_file, file_size, item)
-    print(files_counter, 'файлов', summ_files_size)
+        print(x.strftime('%m.%d.%Y  %H:%M'), dir_or_file, '{:>10}'.format(file_size), item)
+    print('{:>13}'.format(files_counter), 'файлов', summ_files_size, 'байт')
 
 
 def quit():
