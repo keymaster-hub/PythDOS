@@ -1,14 +1,21 @@
 from utils import *
-import sys
+import os
 
+ver = 'PythDOS [Version 0.0.3123]'
+copyright = 'PythDOS, 2020. All rights reserved.'
+print(ver)
+print(copyright + '\n')
 
-functions = {'tree':tree, 'quit':quit, 'exit':quit
+functions = {'tree':tree,
+             'quit':quit, 'exit':quit,
+             'dir':dir
+             
     }
 
 while True:
 
-    f = input('C:\\_')
-    if f in functions:
-        functions[f]()
+    cli = input(os.getcwd() + '>').lower()
+    if cli in functions:
+        functions[cli]()
 
     

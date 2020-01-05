@@ -1,47 +1,49 @@
 from pathlib import Path
 import sys
+import os
+import datetime
 
 
-
-"""-------------------quit-----------------------"""
+def dir():
+    print('Содержимое папки', os.getcwd())
+    dir_count = 0
+    files_counter = 0
+    file_size = 0
+    summ_files_size = 0
+    for item in os.listdir('.'):
+        if Path(item).is_dir():
+            file_size = ''
+            dir_or_file = '   <DIR>   '
+            dir_count += 1
+        else:
+            dir_or_file = '           '
+            file_size = os.stat(item).st_size
+            summ_files_size += file_size
+            files_counter += 1
+        filetime = os.path.getmtime(item)
+        x = datetime.datetime.fromtimestamp(filetime)
+        print(x.strftime('%m.%d.%Y  %H:%M'), dir_or_file, file_size, item)
+    print(files_counter, 'файлов', summ_files_size)
 
 
 def quit():
+    # quit & exit commands
     sys.exit()
 
 
-"""------------------quit-----------------------"""
+def tree(path='.', head='', tail=''):
+    # DOS tree
+    path = Path(path)
 
-
-
-"""--------------------tree---------------------"""''
-
-fork_string   = '|__'
-corner_string = '|__'
-wall_string   = '|  '
-space_string  = '   '
-
-
-def drawtree(path, seen, head='', tail=''):
-    if path.exists():
-        yield head + path.name
-
-    if path.is_dir() and path.resolve() not in seen:
-        seen.add(path.resolve())  # на случай зацикленных ссылок
-        entries = sorted(path.iterdir(), key=lambda x: (x.is_file(), x.name))
+    if path.is_dir():
+        print(head + path.name)
+        entries = sorted(filter(Path.is_dir, path.iterdir()))
 
         for i, entry in enumerate(entries):
             if i < len(entries) - 1:
-                yield from drawtree(entry, seen, tail + fork_string, tail + wall_string)
+                tree(entry, tail + '├──', tail + '│  ')
             else:
-                yield from drawtree(entry, seen, tail + corner_string, tail + space_string)
+                tree(entry, tail + '└──', tail + '   ')
 
-
-def tree(my_path='.'):
-    for line in drawtree(Path(my_path), set()):
-        print(line)
-
-
-"""---------------------------tree-----------------------"""
 
 
