@@ -8,14 +8,17 @@ print(copyright + '\n')
 
 functions = {'tree':tree,
              'quit':quit, 'exit':quit,
-             'dir':dir
+             'dir':dir, 'ls':dir,
+             'cd':cd
              
     }
 
-while True:
 
-    cli = input(os.getcwd() + '>').lower()
-    if cli in functions:
+
+while True:
+    cli = []
+    cli = [x for x in (input(os.getcwd() + '>').lower()).split(' ')]
+    if str(cli[0]) in functions:
         print('\n')
-        functions[cli]()
+        functions[cli[0]](cli)
         print('\n')

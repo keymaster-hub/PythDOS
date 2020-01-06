@@ -4,7 +4,18 @@ import os
 import datetime
 
 
-def dir():
+def cd(cli):
+    if len(cli) > 1:
+        path = cli[1]
+        if len(path) == 0 or Path(path).is_dir() == False:
+            print(os.getcwd())
+        else:
+            accert: Path(path).is_dir()
+            os.chdir(path)
+    else:
+        print(os.getcwd())
+
+def dir(cli):
     print('Содержимое папки', os.getcwd())
     dir_count = 0
     files_counter = 0
@@ -26,12 +37,13 @@ def dir():
     print('{:>13}'.format(files_counter), 'файлов', summ_files_size, 'байт')
 
 
-def quit():
+def quit(cli):
     # quit & exit commands
     sys.exit()
 
 
-def tree(path='.', head='', tail=''):
+def tree(cli='', path='.', head='', tail=''):
+    
     # DOS tree
     path = Path(path)
 
@@ -41,9 +53,7 @@ def tree(path='.', head='', tail=''):
 
         for i, entry in enumerate(entries):
             if i < len(entries) - 1:
-                tree(entry, tail + '├──', tail + '│  ')
+                tree(cli, entry, tail + '├──', tail + '│  ')
             else:
-                tree(entry, tail + '└──', tail + '   ')
-
-
+                tree(cli, entry, tail + '└──', tail + '   ')
 
