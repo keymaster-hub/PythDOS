@@ -4,6 +4,12 @@ import os
 import datetime
 
 
+def help(cli):
+    os.system('help>help.txt')
+    file = open('help.txt', 'r', encoding='cp866')
+    for line in file:
+        print(line.strip())
+
 def cd(cli):
     if len(cli) > 1:
         path = cli[1]

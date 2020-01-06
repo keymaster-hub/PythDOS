@@ -1,15 +1,17 @@
 from utils import *
 import os
 
+
 ver = 'PythDOS [Version 0.0.3123]'
 copyright = 'PythDOS, 2020. All rights reserved.'
 print(ver)
 print(copyright + '\n')
 
 functions = {'tree':tree,
-             'quit':quit, 'exit':quit,
+             'quit':quit, 'exit':quit, 'ex':quit,
              'dir':dir, 'ls':dir,
-             'cd':cd
+             'cd':cd,
+             'help':help, '?':help
              
     }
 
