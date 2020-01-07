@@ -1,4 +1,4 @@
-from utils import *
+import utils
 import os
 import re
 
@@ -8,11 +8,11 @@ copyright = 'PythDOS, 2020. All rights reserved.'
 print(ver)
 print(copyright + '\n')
 
-functions = {'tree': tree,
-             'quit': quit, 'exit': quit, 'x': quit,
-             'dir': dir, 'ls': dir,
-             'cd': cd,
-             'help': help, '?': help
+functions = {'tree': utils.tree,
+             'quit': utils.quit, 'exit': utils.quit, 'x': utils.quit,
+             'dir': utils.dir, 'ls': utils.dir,
+             'cd': utils.cd,
+             'help': utils.help, '?': utils.help
 
              }
 
