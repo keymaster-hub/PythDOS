@@ -1,5 +1,6 @@
 from utils import *
 import os
+import re
 
 
 ver = 'PythDOS [Version 0.0.3123]'
@@ -12,21 +13,19 @@ functions = {'tree':tree,
              'dir':dir, 'ls':dir,
              'cd':cd,
              'help':help, '?':help
-             
-    }
+
+             }
 
 
 
 while True:
     cli = []
-    cli = [x for x in (input(os.getcwd() + '>').lower()).split(' ')]
-    if str(cli[0]) in functions:
-        print('\n')
-        functions[cli[0]](cli)
-        print('\n')
-    elif str(cli[0][-2:]) == '/?':
+    cli = re.split(r'[/ >]', (input(os.getcwd() + '>').lower()))
+    if len(cli) > 1 and cli[1] == '?':
         print('\n')
         help(cli)
         print('\n')
-
-        
+    elif str(cli[0]) in functions:
+        print('\n')
+        functions[cli[0]](cli)
+        print('\n')

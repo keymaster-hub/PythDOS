@@ -10,8 +10,8 @@ def help(cli):
         file = open('help.txt', 'r', encoding='cp866')
         for line in file:
             print(line.strip())
-    else:
-        os.system((cli[0][:-2]) + '/?>' + 'help.txt')
+    elif cli[1] == '?':
+        os.system(str(cli[0]) + '/?>help.txt')
         file = open('help.txt', 'r', encoding='cp866')
         for line in file:
             print(line.strip())
@@ -56,10 +56,11 @@ def quit(cli):
 
 
 def tree(cli='', path='.', head='', tail=''):
-    
+    if 'f' in cli:
+        print('files')
+    cli = ''
     # DOS tree
     path = Path(path)
-
     if path.is_dir():
         print(head + path.name)
         entries = sorted(filter(Path.is_dir, path.iterdir()))
