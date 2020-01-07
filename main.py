@@ -8,7 +8,7 @@ print(ver)
 print(copyright + '\n')
 
 functions = {'tree':tree,
-             'quit':quit, 'exit':quit, 'ex':quit,
+             'quit':quit, 'exit':quit, 'x':quit,
              'dir':dir, 'ls':dir,
              'cd':cd,
              'help':help, '?':help
@@ -24,3 +24,9 @@ while True:
         print('\n')
         functions[cli[0]](cli)
         print('\n')
+    elif str(cli[0][-2:]) == '/?':
+        print('\n')
+        help(cli)
+        print('\n')
+
+        

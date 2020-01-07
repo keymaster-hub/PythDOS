@@ -5,10 +5,17 @@ import datetime
 
 
 def help(cli):
-    os.system('help>help.txt')
-    file = open('help.txt', 'r', encoding='cp866')
-    for line in file:
-        print(line.strip())
+    if cli[0] == 'help' or cli[0] == '?':
+        os.system('help>help.txt')
+        file = open('help.txt', 'r', encoding='cp866')
+        for line in file:
+            print(line.strip())
+    else:
+        os.system((cli[0][:-2]) + '/?>' + 'help.txt')
+        file = open('help.txt', 'r', encoding='cp866')
+        for line in file:
+            print(line.strip())
+        
 
 def cd(cli):
     if len(cli) > 1:
