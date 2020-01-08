@@ -2,6 +2,12 @@ from pathlib import Path
 import sys
 import os
 import datetime
+import re
+
+
+def type(cli):
+    print(cli)
+
 
 def cls(cli):
     r"""
@@ -165,11 +171,15 @@ CD [..]
 
 """
     if len(cli) > 1:
-        path = cli[1]
-        if len(path) == 0 or not Path(path).is_dir():
+        command = re.split(r'[ ]', str(cli[1]), maxsplit=1)
+        if len(command) > 1 and command[0] == 'd':
+                path = str(command[1])
+        else:
+            path = str(command[0])
+        if not os.path.isdir(path):
             print(os.getcwd())
         else:
-            accert: Path(path).is_dir()
+            accert: os.path.isdir(path)
             os.chdir(path)
     else:
         print(os.getcwd())
