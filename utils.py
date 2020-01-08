@@ -3,6 +3,15 @@ import sys
 import os
 import datetime
 
+def cls(cli):
+    r"""
+Очищает содержимое экрана
+
+CLS
+
+"""
+    os.system('cls')
+
 
 def help(cli):
     r"""
