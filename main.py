@@ -14,16 +14,13 @@ functions = {'tree': utils.tree,
              'cd': utils.cd, 'chdir':utils.cd,
              'help': utils.help, '?': utils.help,
              'cls':utils.cls,
-             'type': utils.type
 
              }
 
 while True:
-    cli = re.split(r'[/ >]', (input(os.getcwd() + '>').lower()), maxsplit=1)
+    cli = [ i for i in re.split(r'(^\w+)', (input(os.getcwd() + '>').lower())) if i]
+    cli.append([])
     if str(cli[0]) in functions:
-        if len(cli) > 1 and cli[1] == '?':
-            print(functions[cli[0]].__doc__)
-        else:   
-            print('\n')
-            functions[cli[0]](cli)
-            print('\n')
+        print('\n')
+        functions[cli[0]](cli[1])
+        print('\n')

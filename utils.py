@@ -5,18 +5,17 @@ import datetime
 import re
 
 
-def type(cli):
-    print(cli)
-
-
-def cls(cli):
+def cls(argument):
     r"""
 Очищает содержимое экрана
 
 CLS
 
 """
-    os.system('cls')
+    if argument == '/?':
+        print(cls.__doc__)
+    elif len(argument) == 0:
+        os.system('cls')
 
 
 def help(cli):
@@ -234,6 +233,8 @@ DIR [диск:][путь][имя файла] [/A[[:]атрибуты]] [/B] [/C]
 их действия введите в команде те же ключи с префиксом "-", например: /-W.
 
     """
+    #if len(cli) == 1:
+    
     print('Содержимое папки', os.getcwd())
     dir_count = 0
     files_counter = 0
@@ -271,7 +272,7 @@ TREE [диск:][путь] [/F] [/A]
    /F   Вывод имен файлов в каждой папке.
    /A   Использовать символы ASCII вместо символов национальных алфавитов.
     """
-    if 'f' in cli:
+    if '/f' in cli:
         print('TODO: print files')
     cli = ''
     # DOS tree
