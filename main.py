@@ -19,8 +19,8 @@ functions = {'tree': utils.tree,
 
 
 while True:
-    cli = [ i for i in re.split(r'(^\w+)', (input(os.getcwd() + '>').lower())) if i]
-    cli.append([])
+    string = re.match(r"([a-zA-Z]+)(.*)", (input(os.getcwd() + '>').lower()))
+    cli = list(string.groups())
     if str(cli[0]) in functions:
         print('\n')
         functions[cli[0]](cli[1])
