@@ -233,8 +233,6 @@ DIR [диск:][путь][имя файла] [/A[[:]атрибуты]] [/B] [/C]
 их действия введите в команде те же ключи с префиксом "-", например: /-W.
 
     """
-    #if len(cli) == 1:
-    
     print('Содержимое папки', os.getcwd())
     dir_count = 0
     files_counter = 0
@@ -262,8 +260,27 @@ quit & exit commands
     """
     sys.exit()
 
+    
+def __drawtree(path, seen, head='', tail=''):
+    """ for tree function """
+    
+    fork_string   = '├──'
+    corner_string = '└──'
+    wall_string   = '│  '
+    space_string  = '   '
+    
+    if path.is_dir() and path.resolve() not in seen:
+        yield head + path.name
+        seen.add(path.resolve()) # на случай зацикленных ссылок
+        entries = sorted(filter(Path.is_dir, path.iterdir()))
 
-def tree(cli='', path='.', head='', tail=''):
+        for i, entry in enumerate(entries):
+            if i < len(entries) - 1:
+                yield from __drawtree(entry, seen, tail + fork_string, tail + wall_string)
+            else:
+                yield from __drawtree(entry, seen, tail + corner_string, tail + space_string)
+
+def tree(arg, my_path='.'):
     r"""
 Графическое представление структуры папок или пути.
 
@@ -272,17 +289,11 @@ TREE [диск:][путь] [/F] [/A]
    /F   Вывод имен файлов в каждой папке.
    /A   Использовать символы ASCII вместо символов национальных алфавитов.
     """
-    if '/f' in cli:
-        print('TODO: print files')
-    cli = ''
-    # DOS tree
-    path = Path(path)
-    if path.is_dir():
-        print(head + path.name)
-        entries = sorted(filter(Path.is_dir, path.iterdir()))
-
-        for i, entry in enumerate(entries):
-            if i < len(entries) - 1:
-                tree(cli, entry, tail + '├──', tail + '│  ')
-            else:
-                tree(cli, entry, tail + '└──', tail + '   ')
+    if str(arg).strip() == '/?':
+        print(tree.__doc__)
+        return
+    elif os.path.isdir(str(arg).strip()):
+        my_path = str(arg).strip()
+        
+    for line in __drawtree(Path(my_path), set()):
+        print(line)

@@ -17,6 +17,7 @@ functions = {'tree': utils.tree,
 
              }
 
+
 while True:
     cli = [ i for i in re.split(r'(^\w+)', (input(os.getcwd() + '>').lower())) if i]
     cli.append([])
