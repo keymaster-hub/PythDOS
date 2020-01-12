@@ -16,7 +16,9 @@ CLS
         print(cls.__doc__)
     elif len(argument) == 0:
         os.system('cls')
-
+    else:
+        print('cls' + argument, """ не является внутренней или внешней
+командой, исполняемой программой или пакетным файлом.""")
 
 def help(cli):
     r"""

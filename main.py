@@ -23,11 +23,13 @@ functions = {'tree': utils.tree,
 while True:
     input_string = input(os.getcwd() + '>').lower()
     cli = re.split(r'([a-zA-Z]+)(.*)', input_string)
-    cli.append('')
-    if str(cli[1]) in functions and (cli[2] == '' or str(cli[2])[0] in allowed):
-        print('\n')
-        functions[cli[1]](cli[2])
-        print('\n')
-    elif cli[1] != '': 
-        print((*cli), """              не является внутренней или внешней
-               командой, исполняемой программой или пакетным файлом.""")
+    cli.append(' ')
+    cli.append(' ')
+    function_name = cli[1]
+    argument = cli[2].strip()
+    if function_name in functions and (argument == '' or (argument[0] in allowed)\
+       and len(argument) > 1):
+        functions[function_name](argument)
+    elif function_name != ' ': 
+        print(function_name, """ не является внутренней или внешней
+командой, исполняемой программой или пакетным файлом.""")
