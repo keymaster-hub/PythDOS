@@ -15,7 +15,6 @@ CLS
     if len(argument) == 0:
         os.system('cls')
     else:
-        
         print('cls' + argument, """ не является внутренней или внешней
 командой, исполняемой программой или пакетным файлом utils.""")
         return 'wrong_argument'
@@ -179,13 +178,12 @@ CD [..]
         else:
             path = argument
         if not os.path.isdir(path):
-            print(os.getcwd())
+            print('Системе не удается найти указанный путь.')
         else:
             accert: os.path.isdir(path)
             os.chdir(path)
-    else:
-        print(os.getcwd())
-
+    elif argument == '':
+            print(os.getcwd())
 
 def dir(cli):
     r"""

@@ -19,16 +19,16 @@ functions = {'tree': utils.tree,
 
 while True:
     input_string = input(os.getcwd() + '>').lower()
-    cli = re.split(r'([a-zA-Z]+)(.*)', input_string)
+    cli = re.split(r'([a-z]+)(.*)', input_string)
     cli.append(' ')
     cli.append(' ')
     function_name = cli[1]
     argument = cli[2]
     if function_name in functions and argument == '/?':
         print(functions[function_name].__doc__)
-    elif function_name in functions and (argument == '' or (argument[0] in allowed)\
-       and len(argument) > 1 or argument == ' '):
+    elif function_name in functions:
         functions[function_name]((argument).strip())
-    elif function_name != ' ': 
+        print('\n')
+    elif function_name != ' ' or not function_name.isalpha(): 
         print(function_name + argument, """ не является внутренней или внешней
 командой, исполняемой программой или пакетным файлом.""")
