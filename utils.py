@@ -15,9 +15,12 @@ CLS
     if len(argument) == 0:
         os.system('cls')
     else:
+        
         print('cls' + argument, """ не является внутренней или внешней
-командой, исполняемой программой или пакетным файлом.""")
+командой, исполняемой программой или пакетным файлом utils.""")
+        return 'wrong_argument'
 
+    
 def help(cli):
     r"""
 Для получения сведений об определенной команде наберите HELP <имя команды>
@@ -289,10 +292,7 @@ TREE [диск:][путь] [/F] [/A]
    /F   Вывод имен файлов в каждой папке.
    /A   Использовать символы ASCII вместо символов национальных алфавитов.
     """
-    if str(arg).strip() == '/?':
-        print(tree.__doc__)
-        return
-    elif os.path.isdir(str(arg).strip()):
+    if os.path.isdir(str(arg).strip()):
         my_path = str(arg).strip()
         
     for line in __drawtree(Path(my_path), set()):
