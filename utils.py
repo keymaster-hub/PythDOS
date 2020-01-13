@@ -133,7 +133,7 @@ WMIC           Вывод сведений WMI в интерактивной с�
     print(help.__doc__)
 
 
-def cd(cli):
+def cd(argument):
     r""""Вывод имени либо смена текущего каталога.
 
 CHDIR [/D] [диск:][путь]
@@ -169,12 +169,12 @@ CD [..]
 
 
 """
-    if len(cli) > 1:
-        command = re.split(r'[ ]', str(cli[1]), maxsplit=1)
-        if len(command) > 1 and command[0] == 'd':
-                path = str(command[1])
+    if len(argument) > 0:
+        command = re.split(r'[ ]', argument, maxsplit=1)
+        if len(command) > 1 and command[0] == '/d':
+                path = command[1]
         else:
-            path = str(command[0])
+            path = argument
         if not os.path.isdir(path):
             print(os.getcwd())
         else:

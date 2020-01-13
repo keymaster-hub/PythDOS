@@ -25,15 +25,15 @@ while True:
     cli = re.split(r'([a-zA-Z]+)(.*)', input_string)
     cli.append(' ')
     cli.append(' ')
+    print(cli)
     function_name = cli[1]
-    argument = cli[2].strip()
+    argument = cli[2]
     if function_name in functions and argument == '/?':
         print(functions[function_name].__doc__)
-
     elif function_name in functions and (argument == '' or (argument[0] in allowed)\
        and len(argument) > 1):
-        functions[function_name](argument)
+        functions[function_name]((argument).strip())
         print('\n')
     elif function_name != ' ': 
         print(function_name + argument, """ не является внутренней или внешней
-командой, исполняемой программой или пакетным файлом.""")
+командой, исполняемой программой или пакетным файлом. main""")
