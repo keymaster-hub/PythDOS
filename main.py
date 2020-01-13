@@ -27,9 +27,11 @@ while True:
     cli.append(' ')
     function_name = cli[1]
     argument = cli[2].strip()
-    if function_name in functions and (argument == '' or (argument[0] in allowed)\
+    if function_name in functions and argument == '/?':
+        print(functions[function_name].__doc__)
+    elif function_name in functions and (argument == '' or (argument[0] in allowed)\
        and len(argument) > 1):
         functions[function_name](argument)
     elif function_name != ' ': 
-        print(function_name, """ не является внутренней или внешней
+        print(function_name + argument, """ не является внутренней или внешней
 командой, исполняемой программой или пакетным файлом.""")
