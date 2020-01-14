@@ -7,7 +7,6 @@ ver = 'PythDOS [Version 0.0.3123]'
 copyright = 'PythDOS, 2020. All rights reserved.'
 print(ver)
 print(copyright + '\n')
-allowed = [' ', '/', '>', '']
 
 functions = {'tree': utils.tree,
              'quit': utils.quit, 'exit': utils.quit, 'x': utils.quit,
@@ -20,8 +19,7 @@ functions = {'tree': utils.tree,
 while True:
     input_string = input(os.getcwd() + '>').lower()
     cli = re.split(r'([a-z]+)(.*)', input_string)
-    cli.append(' ')
-    cli.append(' ')
+    cli.extend(' '' ')
     function_name = cli[1]
     argument = cli[2]
     if function_name in functions and argument == '/?':
