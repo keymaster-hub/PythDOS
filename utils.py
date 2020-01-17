@@ -120,6 +120,37 @@ WMIC           Вывод сведений WMI в интерактивной с�
     print(dos_help.__doc__)
 
 
+def dos_rmdir(path):
+    r"""
+    Удаление каталога.
+
+RMDIR [/S] [/Q] [диск:]путь
+RD [/S] [/Q] [диск:]путь
+
+    /S      Удаление дерева каталогов, т. е. не только указанного каталога,
+            но и всех содержащихся в нем файлов и подкаталогов.
+
+    /Q      Отключение запроса подтверждения при удалении дерева каталогов
+            с помощью ключа /S.
+    """
+    try:
+        os.removedirs(path)
+        print("Directory removed successfully")
+
+        # If path is not a directory
+    except NotADirectoryError:
+        print("Specified path is not a directory.")
+
+        # If permission related errors
+    except PermissionError:
+        print("Permission denied.")
+
+        # for other errors
+    except OSError as error:
+        print(error)
+        print("Directory can not be removed")
+
+
 def dos_del(path):
     r"""
     Удаление одного или нескольких файлов.

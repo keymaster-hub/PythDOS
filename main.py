@@ -15,7 +15,8 @@ functions = {'tree': utils.tree,
              'help': utils.dos_help, '?': utils.dos_help,
              'cls': utils.dos_cls,
              'type': utils.dos_type,
-             'del': utils.dos_del, 'erase': utils.dos_del
+             'del': utils.dos_del, 'erase': utils.dos_del,
+             'rmdir': utils.dos_rmdir
              }
 
 while True:
