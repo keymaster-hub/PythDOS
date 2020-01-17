@@ -120,6 +120,45 @@ WMIC           Вывод сведений WMI в интерактивной с�
     print(dos_help.__doc__)
 
 
+def dos_rename(argument):
+    r"""
+    Переименование одного или нескольких файлов.
+
+RENAME [диск:][путь]имя_файла1 имя_файла2.
+REN [диск:][путь]имя_файла1 имя_файла2.
+
+Для конечного файла нельзя указать другой диск или каталог.
+    """
+    if len(argument.split()) == 2:
+        source_dest = argument.split()
+        source = source_dest[0]
+        dest = source_dest[1]
+
+        try:
+            os.rename(source, dest)
+            print("%s renamed to %s successfully." % (source, dest))
+
+        # If Source is a file
+        # but destination is a directory
+        except IsADirectoryError:
+            print("Source is a file but destination is a directory.")
+
+        # If source is a directory
+        # but destination is a file
+        except NotADirectoryError:
+            print("Source is a directory but destination is a file.")
+
+        # For permission related errors
+        except PermissionError:
+            print("Operation not permitted.")
+
+        # For other errors
+        except OSError as error:
+            print(error)
+    else:
+        return
+
+
 def dos_mkdir(path):
     r"""
     Создание каталога.
