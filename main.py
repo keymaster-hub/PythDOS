@@ -9,12 +9,13 @@ print(ver)
 print(copyright + '\n')
 
 functions = {'tree': utils.tree,
-             'quit': utils.quit, 'exit': utils.quit, 'x': utils.quit,
-             'dir': utils.dir, 'ls': utils.dir,
-             'cd': utils.cd, 'chdir':utils.cd,
-             'help': utils.help, '?': utils.help,
-             'cls':utils.cls,
-             'type':utils.type
+             'quit': utils.dos_quit, 'exit': utils.dos_quit, 'x': utils.dos_quit,
+             'dir': utils.dos_dir, 'ls': utils.dos_dir,
+             'cd': utils.dos_cd, 'chdir': utils.dos_cd,
+             'help': utils.dos_help, '?': utils.dos_help,
+             'cls': utils.dos_cls,
+             'type': utils.dos_type,
+             'del': utils.dos_del, 'erase': utils.dos_del
              }
 
 while True:
@@ -35,9 +36,8 @@ while True:
                 else:
                     functions[function_name](argument)    
     elif function_name in functions:
-        functions[function_name]((argument).strip())
+        functions[function_name](argument.strip())
         print('\n')
     elif function_name != ' ' or not function_name.isalpha(): 
         print(function_name + argument, """ не является внутренней или внешней
 командой, исполняемой программой или пакетным файлом.""")
-
