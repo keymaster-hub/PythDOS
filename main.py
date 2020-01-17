@@ -13,7 +13,8 @@ functions = {'tree': utils.tree,
              'dir': utils.dir, 'ls': utils.dir,
              'cd': utils.cd, 'chdir':utils.cd,
              'help': utils.help, '?': utils.help,
-             'cls':utils.cls
+             'cls':utils.cls,
+             'type':utils.type
              }
 
 while True:
@@ -24,10 +25,15 @@ while True:
     argument = cli[2]
     if function_name in functions and argument == '/?':
         print(functions[function_name].__doc__)
-    elif function_name in functions and (len(argument) and argument[0] == '>'):
-        with open(argument[1:], 'w') as file:
+    elif function_name in functions and (len(argument) and '>' in argument):
+        file_name = argument[argument.rfind('>')+1:]
+        argument = argument[:argument.rfind('>')]
+        with open(file_name, 'w') as file:
             with redirect_stdout(file):
-                functions[function_name]('')    
+                if argument == '/?':
+                    print(functions[function_name].__doc__)
+                else:
+                    functions[function_name](argument)    
     elif function_name in functions:
         functions[function_name]((argument).strip())
         print('\n')
