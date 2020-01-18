@@ -16,9 +16,11 @@ functions = {'tree': utils.tree,
              'cls': utils.dos_cls,
              'type': utils.dos_type,
              'del': utils.dos_del, 'erase': utils.dos_del,
-             'rmdir': utils.dos_rmdir,
-             'mkdir': utils.dos_mkdir,
-             'rename': utils.dos_rename
+             'rmdir': utils.dos_rmdir, 'rd': utils.dos_rmdir,
+             'mkdir': utils.dos_mkdir, 'md': utils.dos_mkdir,
+             'rename': utils.dos_rename, 'ren': utils.dos_rename,
+             'copy': utils.dos_copy,
+             'move': utils.dos_move
              }
 
 while True:
