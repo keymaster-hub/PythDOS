@@ -52,8 +52,16 @@ COPY  источник результат
         try:
             shutil.copy(source, dest)
             print("%s copyed to %s successfully." % (source, dest))
+            
+        # If source or dest not found     
         except FileNotFoundError as error:
             print(error)
+            
+        # For other errors
+        except OSError as error:
+            print(error)
+    else:
+        return            
             
 
 def dos_move(argument):
@@ -70,8 +78,16 @@ MOVE [диск:][путь]имя_файла назначение
         try:
             shutil.move(source, dest)
             print("%s moved to %s successfully." % (source, dest))
+            
+        # If source or dest not found    
         except FileNotFoundError as error:
             print(error)
+            
+        # For other errors
+        except OSError as error:
+            print(error)
+    else:
+        return
             
 
 def dos_rename(argument):
