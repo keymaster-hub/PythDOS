@@ -55,6 +55,7 @@ COPY  источник результат
                 print("%s copyed to %s successfully." % (source, dest))
             elif os.path.isdir(source):
                 os.mkdir(os.path.join(dest, source))
+                dest = os.path.join(dest, source)
                 for item in os.listdir(source):
                     s = os.path.join(source, item)
                     d = os.path.join(dest, item)
