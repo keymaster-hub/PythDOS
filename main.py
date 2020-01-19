@@ -43,6 +43,8 @@ while True:
     elif function_name in functions:
         functions[function_name](argument.strip())
         print('\n')
-    elif function_name != ' ' or not function_name.isalpha():
-        print(function_name + argument, """ не является внутренней или внешней
+    elif input_string.strip() == '':
+        pass
+    else:
+        print(input_string, """ не является внутренней или внешней
 командой, исполняемой программой или пакетным файлом.""")
