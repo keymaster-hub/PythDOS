@@ -39,10 +39,10 @@ while True:
                 if argument == '/?':
                     print(functions[function_name].__doc__)
                 else:
-                    functions[function_name](argument)    
+                    functions[function_name](argument)
     elif function_name in functions:
         functions[function_name](argument.strip())
         print('\n')
-    elif function_name != ' ' or not function_name.isalpha(): 
+    elif function_name != ' ' or not function_name.isalpha():
         print(function_name + argument, """ не является внутренней или внешней
 командой, исполняемой программой или пакетным файлом.""")

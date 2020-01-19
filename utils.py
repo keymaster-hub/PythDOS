@@ -41,7 +41,7 @@ TYPE           Вывод на экран содержимого текстов�
 
 def dos_copy(argument):
     r"""
-Копирование одного или нескольких файлов в другое место.
+Копирование файлов и каталогов в другое место.
 
 COPY  источник результат
 """
@@ -50,13 +50,23 @@ COPY  источник результат
         source = source_dest[0]
         dest = source_dest[1]
         try:
-            shutil.copy(source, dest)
+            if os.path.isfile(source):
+                shutil.copy(source, dest)
+                print("%s copyed to %s successfully." % (source, dest))
+            elif os.path.isdir(source):
+                os.mkdir(os.path.join(dest, source))
+                for item in os.listdir(source):
+                    s = os.path.join(source, item)
+                    d = os.path.join(dest, item)
+                    if os.path.isdir(s):
+                        shutil.copytree(s, d)
+                    else:
+                        shutil.copy2(s, d)
             print("%s copyed to %s successfully." % (source, dest))
-            
-        # If source or dest not found     
+        # If source or dest not found
         except FileNotFoundError as error:
             print(error)
-            
+
         # For other errors
         except OSError as error:
             print(error)
