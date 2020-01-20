@@ -320,7 +320,7 @@ CD [..]
         print(os.getcwd())
 
 
-def dos_dir(cli):
+def dos_dir(path):
     r"""
 Вывод списка файлов и подкаталогов в указанном каталоге.
 
@@ -369,25 +369,28 @@ DIR [диск:][путь][имя файла] [/A[[:]атрибуты]] [/B] [/C]
 их действия введите в команде те же ключи с префиксом "-", например: /-W.
 
     """
-    print('Содержимое папки', os.getcwd())
+    
+    path = os.path.join(os.getcwd(), path)
+    print('Содержимое папки', path)
     dir_count = 0
     files_counter = 0
     file_size = 0
     summ_files_size = 0
-    for item in os.listdir('.'):
+    for item in os.listdir(path):
         if Path(item).is_dir():
             file_size = ''
             dir_or_file = '   <DIR>   '
             dir_count += 1
         else:
             dir_or_file = '           '
-            file_size = os.stat(item).st_size
+            file_size = os.stat(os.path.join(path, item)).st_size
             summ_files_size += file_size
             files_counter += 1
-        filetime = os.path.getmtime(item)
+        filetime = os.path.getmtime(os.path.join(path, item))
         x = datetime.datetime.fromtimestamp(filetime)
         print(x.strftime('%m.%d.%Y  %H:%M'), dir_or_file, '{:>10}'.format(file_size), item)
     print('{:>13}'.format(files_counter), 'файлов', summ_files_size, 'байт')
+    
 
 
 def dos_quit(cli):
