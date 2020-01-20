@@ -52,7 +52,6 @@ COPY  источник результат
         try:
             if os.path.isfile(source):
                 shutil.copy(source, dest)
-                print("%s copyed to %s successfully." % (source, dest))
             elif os.path.isdir(source):
                 os.mkdir(os.path.join(dest, source))
                 dest = os.path.join(dest, source)
@@ -246,14 +245,17 @@ def dos_type(argument):
 
 TYPE [диск:][путь]имя_файла
 """
-    if os.path.isfile(argument):
-        with open(argument, 'r') as file:
-            for line in file:
-                print(line.strip())
-    elif argument == '':
-        print('Ошибка в синтаксисе команды')
-    else:
-        print('Не удается найти указанный файл.')
+    try:
+        if os.path.isfile(argument):
+            with open(argument, 'r') as file:
+                for line in file:
+                    print(line.strip())
+        elif argument == '':
+            print('Ошибка в синтаксисе команды')
+        else:
+            print('Не удается найти указанный файл.')
+    except OSError as error:
+        print(error)
 
 
 def dos_cls(argument):
@@ -324,73 +326,36 @@ def dos_dir(path):
     r"""
 Вывод списка файлов и подкаталогов в указанном каталоге.
 
-DIR [диск:][путь][имя файла] [/A[[:]атрибуты]] [/B] [/C] [/D] [/L] [/N]
-  [/O[[:]порядок сортировки]] [/P] [/Q] [/R] [/S] [/T[[:]время]] [/W] [/X] [/4]
-
-  [диск:][путь][имя файла]
-              Диск, каталог или имена файлов для включения в список.
-
-  /A          Отображение файлов с указанными атрибутами.
-  атрибуты     D  Каталоги.            R  Файлы, доступные только для чтения.
-               H  Скрытые файлы.       A  Файлы, готовые для архивирования.
-               S  Системные файлы.     I  Файлы с неиндексированным содержимым.
-               L  Точки повторной обработки.  -  Префикс "-" имеет значение НЕ.
-  /B          Вывод только имен файлов.
-  /C          Применение разделителя групп разрядов при выводе размеров файлов.
-              Используется по умолчанию.  Чтобы отключить применение
-              разделителя групп разрядов, задайте ключ /-C.
-  /D          Вывод списка в нескольких столбцах с сортировкой по столбцам.
-  /L          Использовать нижний регистр для имен файлов.
-  /N          Новый формат длинного списка, имена файлов выводятся в крайнем
-              правом столбце.
-  /O          Сортировка списка отображаемых файлов.
-  порядок      N  По имени (по алфавиту)
-  сортировки   S  По размеру (начиная с минимального)
-               E  По расширению (по алфавиту)
-               D  По дате и времени (начиная с самого старого)
-               G  Начать список с каталогов.  -  Префикс "-" обращает порядок.
-  /P          Пауза после заполнения каждого экрана.
-  /Q          Вывод сведений о владельце файла.
-  /R          Отображение альтернативных потоков данных этого файла.
-  /S          Отображение файлов из указанного каталога и всех его
-              подкаталогов.
-  /T          Выбор поля времени для сортировки.
-  время       C  Создание.
-              A  Последнее использование.
-              W  Последнее изменение.
-  /W          Вывод списка в несколько столбцов.
-  /X          Отображение коротких имен для файлов, чьи имена не соответствуют
-              стандарту 8.3. Формат аналогичен выводу с ключом /N, но короткие
-              имена файлов выводятся слева от длинных. Если короткого имени у
-              файла нет, вместо него выводятся пробелы.
-  /4          Вывод номера года в четырехзначном формате.
-
-Стандартный набор ключей можно записать в переменную среды DIRCMD.  Для отмены
-их действия введите в команде те же ключи с префиксом "-", например: /-W.
+DIR [диск:][путь][имя файла]
 
     """
-    
-    path = os.path.join(os.getcwd(), path)
-    print('Содержимое папки', path)
-    dir_count = 0
-    files_counter = 0
-    file_size = 0
-    summ_files_size = 0
-    for item in os.listdir(path):
-        if Path(item).is_dir():
-            file_size = ''
-            dir_or_file = '   <DIR>   '
-            dir_count += 1
-        else:
-            dir_or_file = '           '
-            file_size = os.stat(os.path.join(path, item)).st_size
-            summ_files_size += file_size
-            files_counter += 1
-        filetime = os.path.getmtime(os.path.join(path, item))
-        x = datetime.datetime.fromtimestamp(filetime)
-        print(x.strftime('%m.%d.%Y  %H:%M'), dir_or_file, '{:>10}'.format(file_size), item)
-    print('{:>13}'.format(files_counter), 'файлов', summ_files_size, 'байт')
-    
+    try:    
+        path = os.path.join(os.getcwd(), path)
+        print('Содержимое папки', path)
+        dir_count = 0
+        files_counter = 0
+        file_size = 0
+        summ_files_size = 0
+        for item in os.listdir(path):
+            if Path(os.path.join(path, item)).is_dir():
+                file_size = ''
+                dir_or_file = '   <DIR>   '
+                dir_count += 1
+                filetime = os.path.getmtime(os.path.join(path, item))
+                x = datetime.datetime.fromtimestamp(filetime)
+                print(x.strftime('%m.%d.%Y  %H:%M'), dir_or_file, '{:>10}'.format(file_size), item)
+        for item in os.listdir(path):
+            if Path(os.path.join(path, item)).is_file():
+                dir_or_file = '           '
+                file_size = os.stat(os.path.join(path, item)).st_size
+                summ_files_size += file_size
+                files_counter += 1
+                filetime = os.path.getmtime(os.path.join(path, item))
+                x = datetime.datetime.fromtimestamp(filetime)
+                print(x.strftime('%m.%d.%Y  %H:%M'), dir_or_file, '{:>10}'.format(file_size), item)
+        print('{:>13}'.format(files_counter), 'файлов', summ_files_size, 'байт')
+    except OSError as error:
+        print(error)    
 
 
 def dos_quit(cli):
@@ -400,37 +365,22 @@ quit & exit commands
     sys.exit()
 
 
-def __drawtree(path, seen, head='', tail=''):
-    """ for tree function """
 
-    fork_string = '├──'
-    corner_string = '└──'
-    wall_string = '│  '
-    space_string = '   '
+def tree(path='.', head='', tail=''):
+    r"""
+Графическое представление структуры папок или пути.
 
-    if path.is_dir() and path.resolve() not in seen:
-        yield head + path.name
-        seen.add(path.resolve())  # на случай зацикленных ссылок
+TREE [диск:][путь]
+
+    """
+    path = Path(path)
+
+    if path.is_dir():
+        print(head + path.name)
         entries = sorted(filter(Path.is_dir, path.iterdir()))
 
         for i, entry in enumerate(entries):
             if i < len(entries) - 1:
-                yield from __drawtree(entry, seen, tail + fork_string, tail + wall_string)
+                tree(entry, tail + '|--', tail + '|  ')
             else:
-                yield from __drawtree(entry, seen, tail + corner_string, tail + space_string)
-
-
-def tree(arg, my_path='.'):
-    r"""
-Графическое представление структуры папок или пути.
-
-TREE [диск:][путь] [/F] [/A]
-
-   /F   Вывод имен файлов в каждой папке.
-   /A   Использовать символы ASCII вместо символов национальных алфавитов.
-    """
-    if os.path.isdir(str(arg).strip()):
-        my_path = str(arg).strip()
-
-    for line in __drawtree(Path(my_path), set()):
-        print(line)
+                tree(entry, tail + '|__', tail + '   ')
